@@ -14,4 +14,4 @@ if digit == 0:
 elif number < 0 or digit < 6:
     print("and is less than 6 and not 0")
 else:
-    print("and is greater than 5", end= " ")
+    print("and is greater than 5")
