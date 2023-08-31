@@ -13,7 +13,7 @@ matrix of integers, div is an integer:
 	 [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]
 
 matrix contains floats:
-         >>> matrix = [[2.0, 4.1, 6.2], [8.01, 10.12, 12.23]]
+         >>> matrix = [[2.1, 4.3, 5.4], [1.01, 11.14, 15.31]]
          >>> matrix_divided(matrix, 2)
          [[1.0, 2.05, 3.1], [4.0, 5.06, 6.12]]
 
