@@ -2,7 +2,7 @@
 import sys
 """ Python3 program to solve N Queen"""
  
-N = 4
+N = []
  
  
 def nqueens(N):
@@ -53,7 +53,6 @@ def solve_n_queens(n):
 
     """call backtrack to place our queens"""
     backtrack(0, n, col, pd, nd)
-
 
            
 if N is not int:
