@@ -1,27 +1,27 @@
 #!/usr/bin/python3
-# Lists the State object with the name passed as argument
-# from the database hbtn_0e_6_usa.
-# Usage: ./10-model_state_my_get.py <mysql username> /
-#                                   <mysql password> /
-#                                   <database name>
-#                                   <state name searched>
-import sys
-from sqlalchemy import create_engine
+"""
+displays the State object with the name passed
+as argument from the database hbtn_0e_6_usa
+"""
+
+from sys import argv
+from model_state import Base, State
+from sqlalchemy import (create_engine)
 from sqlalchemy.orm import sessionmaker
-from model_state import State
 
 if __name__ == "__main__":
-    engine = create_engine("mysql+mysqldb://{}:{}@localhost/{}"
-                           .format(sys.argv[1], sys.argv[2], sys.argv[3]),
-                           pool_pre_ping=True)
+    engine = create_engine(
+      'mysql+mysqldb://{}:{}@localhost/{}'
+      .format(argv[1], argv[2], argv[3]),
+      pool_pre_ping=True)
+    Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
     session = Session()
-
-    found = False
-    for state in session.query(State):
-        if state.name == sys.argv[4]:
-            print("{}".format(state.id))
-            found = True
-            break
-    if found is False:
+    search_state = argv[4]
+    results = session.query(State)\
+        .filter(State.name.contains(search_state)).order_by(State.id).all()
+    if results:
+        print(results[0].id)
+    elif(results != search_state):
         print("Not found")
+    session.close()

@@ -1,11 +1,18 @@
 #!/usr/bin/python3
-# Displays all values in the states table of the database hbtn_0e_0_usa
+"""python script which is free from SQL injections"""
 
-import sys
 import MySQLdb
+from sys import argv
 
 if __name__ == "__main__":
-    db = MySQLdb.connect(user=sys.argv[1], passwd=sys.argv[2], db=sys.argv[3])
-    c = db.cursor()
-    c.execute("SELECT * FROM `states`")
-    [print(state) for state in c.fetchall() if state[1] == sys.argv[4]]
+    connect_db = MySQLdb.connect(host="localhost", port=3306, user=argv[1],
+                                 passwd=argv[2], db=argv[3])
+    mycursor = connect_db.cursor()
+    sql_query = """
+SELECT * FROM states WHERE name = %s ORDER BY states.id ASC"""
+    mycursor.execute(sql_query, (argv[4], ))
+    query_rows = mycursor.fetchall()
+    for result in query_rows:
+        print(result)
+    mycursor.close()
+    connect_db.close
